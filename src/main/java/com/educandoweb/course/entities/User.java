@@ -1,13 +1,17 @@
 package com.educandoweb.course.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Entity //Diz para o JPA tratar como tabela
+@Table(name = "tb_user") //Especificação do nome da tabela
 public class User implements Serializable { //Interface que faz objetos serem transformados em cadeias de Bytes (trafegue na rede, etc)
 
     //Basic attributes
-
+    @Id //Indica qual é o Id (Primary Key)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Incrementa o ID automaticamente no banco de dados
     private Long id;
     private String name;
     private String email;
