@@ -3,6 +3,8 @@ package com.educandoweb.course.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity //Diz para o JPA tratar como tabela
@@ -17,6 +19,9 @@ public class User implements Serializable { //Interface que faz objetos serem tr
     private String email;
     private String phone;
     private String password;
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     //Constructors
     public User(){}
@@ -59,6 +64,8 @@ public class User implements Serializable { //Interface que faz objetos serem tr
     public void setPassword(String password) {
         this.password = password;
     }
+    public List<Order> getOrders() {
+        return orders;}
 
     //Hashcode and Equals
     @Override
@@ -72,6 +79,4 @@ public class User implements Serializable { //Interface que faz objetos serem tr
     public int hashCode() {
         return Objects.hashCode(id);
     }
-
-
 }

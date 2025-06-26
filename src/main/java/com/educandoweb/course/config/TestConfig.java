@@ -12,6 +12,7 @@ import java.util.Arrays;
 @Configuration //Indica que é uma classe de configuração
 @Profile("test")//Indica que é uma configuração para perfil de teste
 public class TestConfig implements CommandLineRunner { //essa implementação faz essa classe rodar quando a aplicação iniciar
+
     @Autowired //realiza a instância automática
     private UserRepository userRepository;
 
