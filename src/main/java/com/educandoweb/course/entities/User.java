@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -20,7 +21,8 @@ public class User implements Serializable { //Interface que faz objetos serem tr
     private String phone;
     private String password;
 
-    @OneToMany(mappedBy = "client")
+    @JsonIgnore
+    @OneToMany(mappedBy = "client") //Um para muitos e onde está mapeado na Order
     private List<Order> orders = new ArrayList<>();
 
     //Constructors
