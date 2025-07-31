@@ -20,7 +20,14 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    @Transient
+    @ManyToMany //Muitas categorias podem ter muitos produtos
+    /* Nome da tabela de associação banco de dados (tabela a parte)
+    joinColumns indica o nome do id referente a tabela principal (produto) enquanto a
+    inverseJoinColumns indica a chave/id da tabela secundária (category)
+    * */
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     public Product(){};

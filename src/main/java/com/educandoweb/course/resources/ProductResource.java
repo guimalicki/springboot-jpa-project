@@ -30,3 +30,4 @@ public class ProductResource {
         return ResponseEntity.ok().body(obj);
     }
 }
+
