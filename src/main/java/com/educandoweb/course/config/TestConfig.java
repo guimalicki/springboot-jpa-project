@@ -1,14 +1,8 @@
 package com.educandoweb.course.config;
 
-import com.educandoweb.course.entities.Category;
-import com.educandoweb.course.entities.Order;
-import com.educandoweb.course.entities.Product;
-import com.educandoweb.course.entities.User;
+import com.educandoweb.course.entities.*;
 import com.educandoweb.course.entities.enums.OrderStatus;
-import com.educandoweb.course.repositories.CategoryRepository;
-import com.educandoweb.course.repositories.OrderRepository;
-import com.educandoweb.course.repositories.ProductRepository;
-import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +27,9 @@ public class TestConfig implements CommandLineRunner { //essa implementação fa
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @Override
     public void run(String... args) throws Exception { //O que irá rodar quando iniciar a aplicação
         User s1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
@@ -52,6 +49,8 @@ public class TestConfig implements CommandLineRunner { //essa implementação fa
         Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
         Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus", 100.99, "");
 
+
+
         //Salvar no banco de dados
         userRepository.saveAll(Arrays.asList(s1, s2)); //Save all recebe e salva uma lista no BD
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
@@ -68,5 +67,14 @@ public class TestConfig implements CommandLineRunner { //essa implementação fa
 
         //Salvar as alterações
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
+
     }
 }
