@@ -34,7 +34,14 @@ public class UserResource {
         user = service.insert(user);
         //Mostra a URI no qual o usuário pode ser encontrado a partir do GET: No caso seria em users/id. Fica nos headers na resposta json
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        //Retorna status 201
         return ResponseEntity.created(uri).body(user);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        //Retorna status 204
+        return ResponseEntity.noContent().build();
+    }
 }
