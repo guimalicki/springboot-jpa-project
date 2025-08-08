@@ -2,11 +2,14 @@ package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundExpection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +33,17 @@ public class UserService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
-    }
+        try {
+            if (!repository.existsById(id))
+                throw new ResourceNotFoundExpection(id);
+            repository.deleteById(id);
+        } catch (ResourceNotFoundExpection e) {
+            throw new ResourceNotFoundExpection(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+
+        }
 
     public User update(Long id, User user){
         User entity = repository.getReferenceById(id); //Prepara o objeto sem mexer no banco de dados
