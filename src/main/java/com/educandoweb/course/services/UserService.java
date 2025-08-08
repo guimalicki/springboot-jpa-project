@@ -2,6 +2,7 @@ package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exceptions.ResourceNotFoundExpection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> obj = repository.findById(id);
-        return obj.get(); //Retorna o objeto de acordo com o tipo especificado
+        return obj.orElseThrow(() -> new ResourceNotFoundExpection(id)); //Tenta fazer o get e caso não funcione, lança a excessão personalizada
     }
 
     public User insert(User user) {
