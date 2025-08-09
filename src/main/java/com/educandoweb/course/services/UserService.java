@@ -4,6 +4,7 @@ import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundExpection;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -46,10 +47,13 @@ public class UserService {
         }
 
     public User update(Long id, User user){
-        User entity = repository.getReferenceById(id); //Prepara o objeto sem mexer no banco de dados
-        updateData(entity, user);
-        return repository.save(entity);
-
+        try {
+            User entity = repository.getReferenceById(id); //Prepara o objeto sem mexer no banco de dados
+            updateData(entity, user);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundExpection(id);
+        }
     }
 
     private void updateData(User entity, User user) {
