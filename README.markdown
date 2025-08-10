@@ -112,7 +112,3 @@ Este projeto foi desenvolvido como parte do meu aprendizado no curso do professo
 ## Contribuições
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests com melhorias ou sugestões.
-
-## Licença
-
-Este projeto é licenciado sob a [MIT License](LICENSE).
